@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHI26 Formative Study</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: pointer;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            width: 75%;
+            /* height: 90vh; */
+            background-color: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .header h1::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+            margin: 10px auto;
+        }
+
+        .progress-container {
+            margin: 25px 0;
+            padding: 0 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .word-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .word-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .word {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .word-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        /* 修改后的释义列表样式 */
+        .meanings-list {
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .meaning-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .meaning-pos {
+            font-weight: 600;
+            color: #ff6b6b;
+            padding: 3px 12px;
+            border-radius: 15px;
+            background: rgba(255, 107, 107, 0.1);
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .meaning-definition {
+            color: #000; /* 黑色 */
+            font-size: 1.4rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .speech-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .speech-animation {
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .speech-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .phonetics-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+            min-height: 50px;
+        }
+
+        .phoneme {
+            background: white;
+            line-height: 50px;
+            padding: 0px 18px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #dee2e6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .phoneme:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-color: #4ecdc4;
+        }
+
+        .phoneme.selected {
+            background: linear-gradient(to bottom right, #4ecdc4, #ff6b6b);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(78, 205, 196, 0.4);
+            z-index: 3;
+        }
+
+        .phoneme.used {
+            background-color: #e9ecef;
+            color: #adb5bd;
+            cursor: default;
+        }
+
+        .selection-action {
+            text-align: center;
+            margin: 15px 0 25px;
+        }
+
+        .add-hint-btn {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .add-hint-btn:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .add-hint-btn:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0 20px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            padding-left: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .section-title i {
+            color: #4ecdc4;
+        }
+
+        .hint-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            min-height: 100px;
+            margin-bottom: 30px;
+        }
+
+        .hint-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 380px;
+            height: 180px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            animation: appear 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            height: 65px;
+        }
+
+        .hint-phonemes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .hint-phoneme {
+            background: linear-gradient(to bottom right, #4ecdc4, #1a2980);
+            color: white;
+            padding: 0 5px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            min-width: 60px;
+            text-align: center;
+            height: 45px;
+            line-height: 45px;
+        }
+
+        .hint-remove {
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: transform 0.2s ease;
+        }
+
+        .hint-remove:hover {
+            transform: scale(1.2);
+        }
+
+        .hint-input input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            transition: all 0.3s;
+        }
+
+        .hint-input input:focus {
+            border-color: #4ecdc4;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+        }
+
+        .hint-input input::placeholder {
+            color: #adb5bd;
+        }
+
+        .sentence-container {
+            margin: 25px 0;
+        }
+
+        .sentence-input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-top: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .sentence-input:focus {
+            border-color: #ff6b6b;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .sentence-input::placeholder {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .export-btn {
+            height: 60px;
+            width: 120px;
+            font-size: 20px;
+            line-height: 60px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 30px;
+            /* background: linear-gradient(to right, #ff6b6b, #4ecdc4); */
+            /* color: white; */
+            cursor: pointer;
+            margin: 0 92% 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-btn:active {
+            transform: translateY(1px);
+        }
+
+        .nav-btn:disabled {
+            background: #adb5bd;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .counter {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2980;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3.5rem;
+            color: #dee2e6;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .instructions {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            color: #555;
+            flex-wrap: wrap;
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .word {
+                font-size: 3.5rem;
+            }
+            
+            .meaning-definition, .meaning-pos {
+                font-size: 1.1rem;
+            }
+            
+            .phoneme {
+                padding: 8px 15px;
+                font-size: 1.1rem;
+            }
+            
+            .nav-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .hint-card {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+            }
+            
+            .word {
+                font-size: 2.8rem;
+            }
+            
+            .word-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .counter {
+                order: -1;
+            }
+            
+            .instructions {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .meaning-item {
+                flex-direction: column;
+                margin-left: 10px;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="export-btn">结束</div>
+            <h1>CHI26 Formative Study</h1>
+            <p>～让我们来背单词～</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-info">
+                <span>学习进度</span>
+                <span id="progressText">1/5</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="word-display">
+            <div class="speech-btn" id="speechBtn">
+                <i class="fas fa-volume-up"></i>
+            </div>
+            
+            <div class="word-container">
+                <div class="word" id="wordDisplay">beautiful</div>
+                <div class="word-info">
+                    <ul class="meanings-list" id="meaningsList">
+                        <!-- 释义列表会由JS动态生成 -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="phonetics-container" id="phonemesContainer">
+                <div class="phoneme">b</div>
+                <div class="phoneme">juː</div>
+                <div class="phoneme">t</div>
+                <div class="phoneme">ɪ</div>
+                <div class="phoneme">f</div>
+                <div class="phoneme">əl</div>
+            </div>
+            <div class="selection-action">
+                <button class="add-hint-btn" id="addHintBtn" disabled>
+                    <i class="fas fa-plus-circle"></i> 为选中的音素添加谐音提示
+                </button>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-lightbulb"></i>
+            <h2>Keyword Generation</h2>
+        </div>
+        <div class="hint-container" id="hintContainer">
+            <div class="hint-card">
+                <div class="hint-header">
+                    <div class="hint-phonemes">
+                        <span class="hint-phoneme">juː t ɪ</span>
+                    </div>
+                    <div class="hint-remove">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="hint-input">
+                    <input type="text" value="尤提" placeholder="输入中文谐音">
+                </div>
+            </div>
+            
+            <div class="hint-card">
+                <div class="hint-header">
+                    <div class="hint-phonemes">
+                        <span class="hint-phoneme">f əl</span>
+                    </div>
+                    <div class="hint-remove">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="hint-input">
+                    <input type="text" value="福欧" placeholder="输入中文谐音">
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-pen"></i>
+            <h2>Association Construction</h2>
+        </div>
+        <div class="sentence-container">
+            <input type="text" class="sentence-input" id="sentenceInput" 
+                   placeholder="输入关键词间的关联">
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn">
+                <i class="fas fa-arrow-left"></i> 上一个单词
+            </button>
+            <div class="counter" id="counter">1/5</div>
+            <button class="nav-btn" id="nextBtn">
+                下一个单词 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 单词数据（包含词性和多个释义）
+        const words = [
+            {
+                "id": 1,
+                "word": "pique",
+                "phonemes": ["p", "iː", "k"],
+                "meanings": [
+                    {"pos": "v.", "definition": "激起，引起（兴趣等）"},
+                    {"pos": "n.", "definition": "不满，生气"}
+                ],
+                "hints": [],
+                "sentence": ""
+            },
+            {
+                "id": 2,
+                "word": "sear",
+                "phonemes": ["s", "ɪ", "ər"],
+                "meanings": [
+                    {"pos": "v.", "definition": "烧焦，烤焦；灼伤"},
+                    {"pos": "adj.", "definition": "烧焦的；枯萎的"}
+                ],
+                "hints": [],
+                "sentence": ""
+            },
+            {
+                "id": 3,
+                "word": "slough",
+                "phonemes": ["s", "l", "aʊ"],
+                "meanings": [
+                    {"pos": "n.", "definition": "沼泽，困境；蜕皮"},
+                    {"pos": "v.", "definition": "使陷入泥沼；蜕皮"}
+                ],
+                "hints": [],
+                "sentence": ""
+            },
+            {
+                "id": 4,
+                "word": "indigenous",
+                "phonemes": ["ɪn", "ˈd", "ɪ", "dʒ", "ɪ", "n", "ə", "s"],
+                "meanings": [
+                    {"pos": "adj.", "definition": "本土的，土生土长的"},
+                    {"pos": "adj.", "definition": "固有的，内在的"}
+                ],
+                "hints": [],
+                "sentence": ""
+            },
+            {
+                "id": 5,
+                "word": "unanimity",
+                "phonemes": ["ˌjuː", "n", "ə", "ˈn", "ɪ", "m", "ɪ", "t", "i"],
+                "meanings": [
+                    {"pos": "n.", "definition": "一致同意，全体一致"}
+                ],
+                "hints": [],
+                "sentence": ""
+            }
+        ];
+
+        // DOM元素
+        const wordDisplay = document.getElementById('wordDisplay');
+        const meaningsList = document.getElementById('meaningsList');
+        const phonemesContainer = document.getElementById('phonemesContainer');
+        const hintContainer = document.getElementById('hintContainer');
+        const sentenceInput = document.getElementById('sentenceInput');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const counter = document.getElementById('counter');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const addHintBtn = document.getElementById('addHintBtn');
+        const speechBtn = document.getElementById('speechBtn');
+
+        // 应用状态
+        let currentWordIndex = 0;
+        let selectedPhonemes = [];
+        let speechSynthesis = window.speechSynthesis;
+        let isSpeaking = false;
+
+        // 初始化应用
+        function initApp() {
+            renderWord();
+            updateCounter();
+            updateProgress();
+        }
+
+        // 导出数据功能
+        document.getElementsByClassName('export-btn')[0].addEventListener('click', function() {
+            const jsonString = JSON.stringify(words, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'result.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // 朗读单词功能
+        function speakWord() {
+            if (isSpeaking) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                speechBtn.classList.remove('speech-animation');
+                return;
+            }
+            
+            const word = words[currentWordIndex].word;
+            
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            
+            utterance.onstart = function() {
+                isSpeaking = true;
+                speechBtn.classList.add('speech-animation');
+                speechBtn.innerHTML = '<i class="fas fa-stop"></i>';
+            };
+            
+            utterance.onend = function() {
+                isSpeaking = false;
+                speechBtn.classList.remove('speech-animation');
+                speechBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        // 渲染当前单词
+        function renderWord() {
+            const word = words[currentWordIndex];
+            
+            // 更新单词显示
+            wordDisplay.textContent = word.word;
+            
+            // 清空释义列表
+            meaningsList.innerHTML = '';
+            
+            // 渲染多个释义
+            word.meanings.forEach(meaning => {
+                const li = document.createElement('li');
+                li.className = 'meaning-item';
+                
+                const posSpan = document.createElement('span');
+                posSpan.className = 'meaning-pos';
+                posSpan.textContent = meaning.pos;
+                
+                const definitionSpan = document.createElement('span');
+                definitionSpan.className = 'meaning-definition';
+                definitionSpan.textContent = meaning.definition;
+                
+                li.appendChild(posSpan);
+                li.appendChild(definitionSpan);
+                meaningsList.appendChild(li);
+            });
+            
+            // 清空音素容器
+            phonemesContainer.innerHTML = '';
+            
+            // 渲染音素
+            word.phonemes.forEach((phoneme, index) => {
+                const phonemeEl = document.createElement('div');
+                phonemeEl.className = 'phoneme';
+                phonemeEl.textContent = phoneme;
+                phonemeEl.dataset.index = index;
+                
+                // 检查该音素是否已被使用
+                const isUsed = isPhonemeUsed(index, word.hints);
+                if (isUsed) {
+                    phonemeEl.classList.add('used');
+                }
+                
+                // 检查该音素是否已被选中
+                const isSelected = selectedPhonemes.some(item => item.index === index);
+                if (isSelected) {
+                    phonemeEl.classList.add('selected');
+                }
+                
+                // 添加点击事件
+                phonemeEl.addEventListener('click', () => togglePhonemeSelection(index));
+                
+                phonemesContainer.appendChild(phonemeEl);
+            });
+            
+            // 渲染谐音提示
+            renderHints();
+            
+            // 更新句子输入框
+            sentenceInput.value = word.sentence || '';
+            
+            updateAddButtonState();
+        }
+
+        // 检查音素是否已被使用
+        function isPhonemeUsed(index, hints) {
+            for (let hint of hints) {
+                if (hint.indices.includes(index)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 切换音素选择状态
+        function togglePhonemeSelection(index) {
+            const word = words[currentWordIndex];
+            const phonemeEl = phonemesContainer.querySelector(`.phoneme[data-index="${index}"]`);
+            
+            // 如果音素已被使用，则不处理点击
+            if (phonemeEl.classList.contains('used')) return;
+            
+            // 检查当前音素是否已经被选中
+            const isSelected = phonemeEl.classList.contains('selected');
+            
+            if (isSelected) {
+                // 取消选中
+                phonemeEl.classList.remove('selected');
+                // 从selectedPhonemes数组中移除
+                selectedPhonemes = selectedPhonemes.filter(item => item.index !== index);
+            } else {
+                // 否则，选中
+                phonemeEl.classList.add('selected');
+                selectedPhonemes.push({
+                    phoneme: word.phonemes[index],
+                    index: index
+                });
+            }
+            
+            updateAddButtonState();
+        }
+
+        // 更新添加按钮状态
+        function updateAddButtonState() {
+            addHintBtn.disabled = selectedPhonemes.length === 0;
+        }
+
+        // 渲染谐音提示
+        function renderHints() {
+            const word = words[currentWordIndex];
+            
+            // 清空提示容器
+            hintContainer.innerHTML = '';
+            
+            if (word.hints.length === 0) {
+                hintContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-comment-slash"></i>
+                        <p>尚未添加任何谐音提示<br>请选择音素后点击"添加谐音提示"按钮</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 渲染所有提示
+            word.hints.forEach(hint => {
+                const hintCard = document.createElement('div');
+                hintCard.className = 'hint-card';
+                hintCard.dataset.id = hint.id;
+                
+                // 按照原始顺序显示音素
+                const phonemesStr = hint.phonemes.join(' ');
+                
+                hintCard.innerHTML = `
+                    <div class="hint-header">
+                        <div class="hint-phonemes">
+                            <span class="hint-phoneme">${phonemesStr}</span>
+                        </div>
+                        <div class="hint-remove">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    <div class="hint-input">
+                        <input type="text" value="${hint.hint || ''}" 
+                               placeholder="输入中文谐音" data-id="${hint.id}">
+                    </div>
+                `;
+                
+                // 添加输入事件
+                const input = hintCard.querySelector('input');
+                input.addEventListener('input', (e) => {
+                    hint.hint = e.target.value;
+                });
+                
+                // 添加删除事件
+                const removeBtn = hintCard.querySelector('.hint-remove');
+                removeBtn.addEventListener('click', () => {
+                    // 从数组中删除提示
+                    word.hints = word.hints.filter(h => h.id !== hint.id);
+                    // 重新渲染
+                    renderHints();
+                    renderWord(); // 重新渲染音素，释放已使用的音素
+                });
+                
+                hintContainer.appendChild(hintCard);
+            });
+        }
+
+        // 添加新的谐音提示
+        function addNewHint() {
+            if (selectedPhonemes.length === 0) return;
+            
+            const word = words[currentWordIndex];
+            
+            // 按照原始顺序排序
+            const sortedPhonemes = [...selectedPhonemes].sort((a, b) => a.index - b.index);
+            
+            const newHint = {
+                id: Date.now(),
+                phonemes: sortedPhonemes.map(item => item.phoneme),
+                indices: sortedPhonemes.map(item => item.index),
+                hint: ""
+            };
+            
+            // 添加到提示数组
+            word.hints.push(newHint);
+            
+            // 清除选择
+            selectedPhonemes = [];
+            
+            // 重新渲染
+            renderHints();
+            renderWord();
+        }
+
+        // 更新计数器
+        function updateCounter() {
+            counter.textContent = `${currentWordIndex + 1}/${words.length}`;
+            progressText.textContent = `${currentWordIndex + 1}/${words.length}`;
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            const progress = ((currentWordIndex + 1) / words.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // 事件监听器
+        prevBtn.addEventListener('click', () => {
+            if (currentWordIndex > 0) {
+                currentWordIndex--;
+                selectedPhonemes = []; // 清除选择状态
+                renderWord();
+                updateCounter();
+                updateProgress();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentWordIndex < words.length - 1) {
+                currentWordIndex++;
+                selectedPhonemes = []; // 清除选择状态
+                renderWord();
+                updateCounter();
+                updateProgress();
+            }
+        });
+
+        // 句子输入监听
+        sentenceInput.addEventListener('input', () => {
+            words[currentWordIndex].sentence = sentenceInput.value;
+        });
+
+        // 添加谐音按钮监听
+        addHintBtn.addEventListener('click', addNewHint);
+        
+        // 发音按钮监听
+        speechBtn.addEventListener('click', speakWord);
+
+        // 初始化应用
+        initApp();
+    </script>
+</body>
+</html>
