@@ -132,13 +132,12 @@
             margin-top: 10px;
         }
 
-        /* 修改后的释义列表样式 */
         .meanings-list {
             list-style-type: none;
             display: flex;
             flex-direction: row;
             text-align: center;
-            max-width: 600px;
+            max-width: 70vw;
             margin: 0 auto;
         }
         
@@ -147,7 +146,8 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin: 8px 0;
+            padding-left: 10px;
+            margin: 10px 0;
             line-height: 1.5;
         }
         
@@ -382,7 +382,7 @@
         }
 
         .sentence-container {
-            margin: 25px 0;
+            margin: 5px 0;
         }
 
         .sentence-input {
@@ -574,12 +574,7 @@
                 align-items: center;
                 gap: 10px;
             }
-            
-            .meaning-item {
-                flex-direction: column;
-                margin-left: 10px;
-                gap: 5px;
-            }
+        
         }
     </style>
 </head>
@@ -669,8 +664,12 @@
             <h2>Association Construction</h2>
         </div>
         <div class="sentence-container">
-            <input type="text" class="sentence-input" id="sentenceInput" 
+            <input type="text" class="sentence-input" id="sentenceInput1" 
                    placeholder="输入关键词间的关联">
+        </div>
+        <div class="sentence-container">
+            <input type="text" class="sentence-input" id="sentenceInput2" 
+                   placeholder="描述脑海中构思的图像">
         </div>
         
         <div class="nav-buttons">
@@ -696,7 +695,8 @@
                     {"pos": "n.", "definition": "不满，生气"}
                 ],
                 "hints": [],
-                "sentence": ""
+                "sentence1": "",
+                "sentence2": ""
             },
             {
                 "id": 2,
@@ -707,7 +707,8 @@
                     {"pos": "adj.", "definition": "烧焦的；枯萎的"}
                 ],
                 "hints": [],
-                "sentence": ""
+                "sentence1": "",
+                "sentence2": ""
             },
             {
                 "id": 3,
@@ -718,7 +719,8 @@
                     {"pos": "v.", "definition": "使陷入泥沼；蜕皮"}
                 ],
                 "hints": [],
-                "sentence": ""
+                "sentence1": "",
+                "sentence2": ""
             },
             {
                 "id": 4,
@@ -729,7 +731,8 @@
                     {"pos": "adj.", "definition": "固有的，内在的"}
                 ],
                 "hints": [],
-                "sentence": ""
+                "sentence1": "",
+                "sentence2": ""
             },
             {
                 "id": 5,
@@ -739,7 +742,8 @@
                     {"pos": "n.", "definition": "一致同意，全体一致"}
                 ],
                 "hints": [],
-                "sentence": ""
+                "sentence1": "",
+                "sentence2": ""
             }
         ];
 
@@ -748,7 +752,8 @@
         const meaningsList = document.getElementById('meaningsList');
         const phonemesContainer = document.getElementById('phonemesContainer');
         const hintContainer = document.getElementById('hintContainer');
-        const sentenceInput = document.getElementById('sentenceInput');
+        const sentenceInput1 = document.getElementById('sentenceInput1');
+        const sentenceInput2 = document.getElementById('sentenceInput2');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const counter = document.getElementById('counter');
@@ -879,7 +884,8 @@
             renderHints();
             
             // 更新句子输入框
-            sentenceInput.value = word.sentence || '';
+            sentenceInput1.value = word.sentence1 || '';
+            sentenceInput2.value = word.sentence2 || '';
             
             updateAddButtonState();
         }
@@ -1049,8 +1055,11 @@
         });
 
         // 句子输入监听
-        sentenceInput.addEventListener('input', () => {
-            words[currentWordIndex].sentence = sentenceInput.value;
+        sentenceInput1.addEventListener('input', () => {
+            words[currentWordIndex].sentence1 = sentenceInput1.value;
+        });
+        sentenceInput2.addEventListener('input', () => {
+            words[currentWordIndex].sentence2 = sentenceInput2.value;
         });
 
         // 添加谐音按钮监听
