@@ -686,66 +686,103 @@
     <script>
         // 单词数据（包含词性和多个释义）
         const words = [
-            {
-                "id": 1,
-                "word": "pique",
-                "phonemes": ["p", "iː", "k"],
-                "meanings": [
-                    {"pos": "v.", "definition": "激起，引起（兴趣等）"},
-                    {"pos": "n.", "definition": "不满，生气"}
-                ],
-                "hints": [],
-                "sentence1": "",
-                "sentence2": ""
-            },
-            {
-                "id": 2,
-                "word": "sear",
-                "phonemes": ["s", "ɪ", "ər"],
-                "meanings": [
-                    {"pos": "v.", "definition": "烧焦，烤焦；灼伤"},
-                    {"pos": "adj.", "definition": "烧焦的；枯萎的"}
-                ],
-                "hints": [],
-                "sentence1": "",
-                "sentence2": ""
-            },
-            {
-                "id": 3,
-                "word": "slough",
-                "phonemes": ["s", "l", "aʊ"],
-                "meanings": [
-                    {"pos": "n.", "definition": "沼泽，困境；蜕皮"},
-                    {"pos": "v.", "definition": "使陷入泥沼；蜕皮"}
-                ],
-                "hints": [],
-                "sentence1": "",
-                "sentence2": ""
-            },
-            {
-                "id": 4,
-                "word": "indigenous",
-                "phonemes": ["ɪn", "ˈd", "ɪ", "dʒ", "ɪ", "n", "ə", "s"],
-                "meanings": [
-                    {"pos": "adj.", "definition": "本土的，土生土长的"},
-                    {"pos": "adj.", "definition": "固有的，内在的"}
-                ],
-                "hints": [],
-                "sentence1": "",
-                "sentence2": ""
-            },
-            {
-                "id": 5,
-                "word": "unanimity",
-                "phonemes": ["ˌjuː", "n", "ə", "ˈn", "ɪ", "m", "ɪ", "t", "i"],
-                "meanings": [
-                    {"pos": "n.", "definition": "一致同意，全体一致"}
-                ],
-                "hints": [],
-                "sentence1": "",
-                "sentence2": ""
-            }
-        ];
+    {
+        "id": 1,
+        "word": "pique",
+        "phonemes": ["p", "iː", "k"],
+        "meanings": [
+            {"pos": "v.", "definition": "激起，引起（兴趣等）"},
+            {"pos": "n.", "definition": "不满，生气"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 2,
+        "word": "metropolis",
+        "phonemes": ["m", "ɪ", "ˈt", "r", "ɒ", "p", "ə", "l", "ɪ", "s"],
+        "meanings": [
+            {"pos": "n.", "definition": "大都市，首府"},
+            {"pos": "n.", "definition": "中心地区"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 3,
+        "word": "sleigh",
+        "phonemes": ["s", "l", "eɪ"],
+        "meanings": [
+            {"pos": "n.", "definition": "雪橇"},
+            {"pos": "v.", "definition": "乘雪橇"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 4,
+        "word": "chronology",
+        "phonemes": ["k", "r", "ə", "ˈn", "ɒ", "l", "ə", "dʒ", "i"],
+        "meanings": [
+            {"pos": "n.", "definition": "年表，年代学"},
+            {"pos": "n.", "definition": "事件按时间顺序的排列"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 5,
+        "word": "sear",
+        "phonemes": ["s", "ɪ", "ə"],
+        "meanings": [
+            {"pos": "v.", "definition": "烧焦，烤焦；灼伤"},
+            {"pos": "adj.", "definition": "烧焦的；枯萎的"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 6,
+        "word": "incongruity",
+        "phonemes": ["ˌɪ", "n", "k", "ə", "n", "ˈɡ", "r", "uː", "ɪ", "t", "i"],
+        "meanings": [
+            {"pos": "n.", "definition": "不协调，不一致"},
+            {"pos": "n.", "definition": "不适宜的事物"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 7,
+        "word": "shed",
+        "phonemes": ["ʃ", "e", "d"],
+        "meanings": [
+            {"pos": "n.", "definition": "棚屋，小屋"},
+            {"pos": "v.", "definition": "脱落；流出"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    },
+    {
+        "id": 8,
+        "word": "dandelion",
+        "phonemes": ["ˈd", "æ", "n", "d", "ɪ", "l", "aɪ", "ə", "n"],
+        "meanings": [
+            {"pos": "n.", "definition": "蒲公英"},
+            {"pos": "n.", "definition": "蒲公英属植物"}
+        ],
+        "hints": [],
+        "sentence1": "",
+        "sentence2": ""
+    }
+];
 
         // DOM元素
         const wordDisplay = document.getElementById('wordDisplay');
